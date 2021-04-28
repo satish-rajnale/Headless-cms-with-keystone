@@ -13,10 +13,15 @@ const adapterConfig = { mongoUri: process.env.MONGO_URI };
  * - Select configure access control and authentication (See: https://keystonejs.com/api/access-control)
  */
 
+const PostSchema = require("./lists/Post") // includ the file
+
 const keystone = new Keystone({
   adapter: new Adapter(adapterConfig),
-  cookieSecret: process.env.COOKIE_SECRET
+  cookieSecret: process.env.COOKIE_SECRET // from .env so that it wont create each time a new cookie
 });
+
+//order matters here after defining keystone only
+keystone.createList('Post', PostSchema); // here Post is a name you can give and PostSchema is the schema required 
 
 module.exports = {
   keystone,
