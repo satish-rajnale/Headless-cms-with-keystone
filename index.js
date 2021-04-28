@@ -1,4 +1,4 @@
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 const { Keystone } = require('@keystonejs/keystone');
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
@@ -7,7 +7,7 @@ const { PasswordAuthStrategy } = require("@keystonejs/auth-password")
 
 
 
-const PROJECT_NAME = 'cms';
+const PROJECT_NAME = 'Admin CMS';
 const adapterConfig = { mongoUri: process.env.MONGO_URI };
 
 const isAdmin = ({authentication : {item: user}}) => {
@@ -70,7 +70,7 @@ module.exports = {
      name: PROJECT_NAME, 
      enableDefaultRoute: true,
      authStrategy,
-     isAccessAllowed:isLoggedIn
+     isAccessAllowed:isAdmin
     })],
 };
 
