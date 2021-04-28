@@ -3,6 +3,10 @@ const { Keystone } = require('@keystonejs/keystone');
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
+const { PasswordAuthStrategy } = require("@keystonejs/auth-password")
+
+
+
 const PROJECT_NAME = 'cms';
 const adapterConfig = { mongoUri: process.env.MONGO_URI };
 
@@ -21,7 +25,23 @@ const keystone = new Keystone({
 keystone.createList('Post', PostSchema); // here Post is a name you can give and PostSchema is the schema required 
 keystone.createList('User', UserSchema); // here Post is a name you can give and PostSchema is the schema required 
 
+
+const authStrategy = keystone.createAuthStrategy({
+  type: PasswordAuthStrategy,
+  list: "User",
+  config: {
+    identityField: "email",
+    secretField: "password"
+  }
+})
+
+
+
+
 module.exports = {
   keystone,
-  apps: [new GraphQLApp(), new AdminUIApp({ name: PROJECT_NAME, enableDefaultRoute: true })],
+  apps: [new GraphQLApp(), new AdminUIApp({
+     name: PROJECT_NAME, 
+     enableDefaultRoute: true,
+     authStrategy})],
 };
