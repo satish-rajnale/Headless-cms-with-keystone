@@ -1,9 +1,10 @@
+const dotenv = require("dotenv").config();
 const { Keystone } = require('@keystonejs/keystone');
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
 const PROJECT_NAME = 'cms';
-const adapterConfig = { mongoUri: 'mongodb+srv://nb:nb123@cluster0.fggbw.mongodb.net/KeystoneBlog?retryWrites=true&w=majority' };
+const adapterConfig = { mongoUri: process.env.MONGO_URI };
 
 
 /**
@@ -14,6 +15,7 @@ const adapterConfig = { mongoUri: 'mongodb+srv://nb:nb123@cluster0.fggbw.mongodb
 
 const keystone = new Keystone({
   adapter: new Adapter(adapterConfig),
+  cookieSecret: process.env.COOKIE_SECRET
 });
 
 module.exports = {
