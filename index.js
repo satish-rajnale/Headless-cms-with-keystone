@@ -10,8 +10,15 @@ const { PasswordAuthStrategy } = require("@keystonejs/auth-password")
 const PROJECT_NAME = 'cms';
 const adapterConfig = { mongoUri: process.env.MONGO_URI };
 
+const isAdmin = ({authentication : {item: user}}) => {
+ 
+  return !!user && !!user.isAdmin;
+};
 
-
+const isLoggedIn = ({authentication : {item: user}}) => {
+ 
+  return !!user 
+};
 
 const PostSchema = require("./lists/Post") // includ the file
 const UserSchema = require("./lists/User") // includ the file
@@ -22,8 +29,27 @@ const keystone = new Keystone({
 });
 
 //order matters here after defining keystone only
-keystone.createList('Post', PostSchema); // here Post is a name you can give and PostSchema is the schema required 
-keystone.createList('User', UserSchema); // here Post is a name you can give and PostSchema is the schema required 
+keystone.createList('Post', {
+  fields: PostSchema.fields,
+  access: {
+    read:true,
+    create: isLoggedIn,
+    update: isLoggedIn,
+    delete: isLoggedIn,
+  }
+}); // here Post is a name you can give and PostSchema is the schema required 
+
+
+
+keystone.createList('User', {
+  fields: UserSchema.fields,
+  access: {
+    read:true,
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
+  }
+}); // here Post is a name you can give and PostSchema is the schema required 
 
 
 const authStrategy = keystone.createAuthStrategy({
@@ -44,9 +70,9 @@ module.exports = {
      name: PROJECT_NAME, 
      enableDefaultRoute: true,
      authStrategy,
-     isAccessAllowed:({authentication : {item: user}}) => {
-       console.log(user);
-       return !!user && !!user.isAdmin;
-     } 
+     isAccessAllowed:isLoggedIn
     })],
 };
+
+
+//satish@email.com 12345678
