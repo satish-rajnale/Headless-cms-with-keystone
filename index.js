@@ -43,5 +43,10 @@ module.exports = {
   apps: [new GraphQLApp(), new AdminUIApp({
      name: PROJECT_NAME, 
      enableDefaultRoute: true,
-     authStrategy})],
+     authStrategy,
+     isAccessAllowed:({authentication : {item: user}}) => {
+       console.log(user);
+       return !!user && !!user.isAdmin;
+     } 
+    })],
 };
