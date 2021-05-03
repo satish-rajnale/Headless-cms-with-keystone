@@ -1738,14 +1738,6 @@
     "@keystonejs/access-control" "^7.1.1"
     express "^4.17.1"
 
-"@keystonejs/auth-password@^6.1.1":
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/@keystonejs/auth-password/-/auth-password-6.1.1.tgz#c5c473279d98d7678314827c9745fd5b34b02850"
-  integrity sha512-V1LKyjz+qI9M5NWg2agEEUOQvGUT+Yrg+IaZEZrGK2JLtLexwar8f2wTMW/nkzVnmpB3drDoAH5ftzw2pq/BFw==
-  dependencies:
-    "@keystonejs/fields" "^22.1.2"
-    "@keystonejs/session" "^8.3.1"
-
 "@keystonejs/field-views-loader@^6.1.1":
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/@keystonejs/field-views-loader/-/field-views-loader-6.1.1.tgz#ec04be7b644e8248dccc45b55e3f6e2a2710beae"
